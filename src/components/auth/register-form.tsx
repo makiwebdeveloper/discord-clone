@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import GoogleButton from "./google-button";
 
 export default function RegisterForm() {
   const form = useForm<RegisterValidatorType>({
@@ -76,8 +77,15 @@ export default function RegisterForm() {
           )}
         />
         <Button variant="accent" className="w-full mt-5">
-          Log in
+          Sing up
         </Button>
+        <div className="relative my-5">
+          <div className="h-[1px] w-full bg-zinc-500" />
+          <p className="text-zinc-400 bg-background px-2 absolute left-[50%] translate-x-[-50%] translate-y-[-60%]">
+            or
+          </p>
+        </div>
+        <GoogleButton className="w-full" />
       </form>
     </Form>
   );
