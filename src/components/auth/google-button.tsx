@@ -12,6 +12,7 @@ interface Props {
 export default function GoogleButton({ className }: Props) {
   return (
     <Button
+      type="button"
       className={cn(className)}
       variant="secondary"
       onClick={() => {

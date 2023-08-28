@@ -1,5 +1,6 @@
 "use client";
 
+import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -17,8 +18,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import GoogleButton from "./google-button";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function RegisterForm() {
+  const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<RegisterValidatorType>({
     resolver: zodResolver(registerValidator),
     defaultValues: {
@@ -28,7 +34,29 @@ export default function RegisterForm() {
     },
   });
 
-  async function onSubmit(data: RegisterValidatorType) {}
+  async function onSubmit(data: RegisterValidatorType) {
+    try {
+      await axios.post("/api/auth/register", data);
+      router.push("/login");
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.response?.status === 400) {
+        toast({
+          title: "User with this username already exists",
+          description: "Enter another username",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Auth error",
+          description: "Something went wrong! Try again",
+          variant: "destructive",
+        });
+      }
+    }
+
+    form.reset();
+  }
 
   return (
     <Form {...form}>
@@ -70,14 +98,14 @@ export default function RegisterForm() {
                 Password <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button variant="accent" className="w-full mt-5">
-          Sing up
+          Sign up
         </Button>
         <div className="relative my-5">
           <div className="h-[1px] w-full bg-zinc-500" />

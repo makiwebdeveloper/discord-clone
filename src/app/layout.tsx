@@ -1,7 +1,9 @@
-import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
-import type { Metadata } from "next";
+import { cn } from "@/lib/utils";
 import { Open_Sans } from "next/font/google";
+import type { Metadata } from "next";
+import Providers from "@/components/providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,7 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(openSans.className)}>{children}</body>
+      <body className={cn(openSans.className)}>
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
+      </body>
     </html>
   );
 }

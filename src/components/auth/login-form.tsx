@@ -14,8 +14,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import GoogleButton from "./google-button";
+import { signIn } from "next-auth/react";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const { toast } = useToast();
+  const router = useRouter();
+
   const form = useForm<LoginValidatorType>({
     resolver: zodResolver(loginValidator),
     defaultValues: {
@@ -24,7 +30,23 @@ export default function LoginForm() {
     },
   });
 
-  async function onSubmit(data: LoginValidatorType) {}
+  async function onSubmit(data: LoginValidatorType) {
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((res) => {
+      if (res?.error) {
+        toast({
+          title: "Username or password is not correct!",
+          description: "Try again",
+          variant: "destructive",
+        });
+        form.reset();
+      } else {
+        router.push("/");
+      }
+    });
+  }
 
   return (
     <Form {...form}>
@@ -53,7 +75,7 @@ export default function LoginForm() {
                 Password <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
