@@ -18,5 +18,5 @@ export default async function AuthLayout({
     redirect("/");
   }
 
-  return <main className="bg-auth h-screen bg-cover center">{children}</main>;
+  return <>{children}</>;
 }

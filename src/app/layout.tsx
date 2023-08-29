@@ -22,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(openSans.className)}>
         <Providers>
-          {children}
+          <main className="bg-background-image h-screen bg-cover center">
+            {children}
+          </main>
           <Toaster />
         </Providers>
       </body>

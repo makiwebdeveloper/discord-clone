@@ -1,0 +1,5 @@
+SERVER {
+  Create | Login to server
+  Invite friends
+}
+
