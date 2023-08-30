@@ -1,8 +1,12 @@
 "use client";
 
+import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginValidatorType, loginValidator } from "@/lib/validators/auth";
+import {
+  RegisterValidatorType,
+  registerValidator,
+} from "@/lib/validators/auth";
 import {
   Form,
   FormControl,
@@ -13,39 +17,45 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import GoogleButton from "./google-button";
-import { signIn } from "next-auth/react";
-import { useToast } from "@/hooks/use-toast";
+import GoogleButton from "../google-button";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
-export default function LoginForm() {
-  const { toast } = useToast();
+export default function RegisterForm() {
   const router = useRouter();
+  const { toast } = useToast();
 
-  const form = useForm<LoginValidatorType>({
-    resolver: zodResolver(loginValidator),
+  const form = useForm<RegisterValidatorType>({
+    resolver: zodResolver(registerValidator),
     defaultValues: {
       username: "",
       password: "",
+      name: "",
     },
   });
 
-  async function onSubmit(data: LoginValidatorType) {
-    signIn("credentials", {
-      ...data,
-      redirect: false,
-    }).then((res) => {
-      if (res?.error) {
+  async function onSubmit(data: RegisterValidatorType) {
+    try {
+      await axios.post("/api/auth/register", data);
+      router.push("/login");
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.response?.status === 400) {
         toast({
-          title: "Username or password is not correct!",
-          description: "Try again",
+          title: "User with this username already exists",
+          description: "Enter another username",
           variant: "destructive",
         });
-        form.reset();
       } else {
-        router.push("/");
+        toast({
+          title: "Auth error",
+          description: "Something went wrong! Try again",
+          variant: "destructive",
+        });
       }
-    });
+    }
+
+    form.reset();
   }
 
   return (
@@ -59,6 +69,19 @@ export default function LoginForm() {
               <FormLabel>
                 Username <span className="text-destructive">*</span>
               </FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="mt-2">
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -82,7 +105,7 @@ export default function LoginForm() {
           )}
         />
         <Button variant="accent" className="w-full mt-5">
-          Log in
+          Sign up
         </Button>
         <div className="relative my-5">
           <div className="h-[1px] w-full bg-zinc-500" />

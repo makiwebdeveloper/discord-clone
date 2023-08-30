@@ -56,4 +56,12 @@ body {
   .custom-scrollbar {
     @apply scrollbar-thin scrollbar-thumb-zinc-600
   }
+
+  .modal-title {
+    @apply text-center text-2xl font-bold;
+  }
+
+  .modal-description {
+    @apply text-zinc-400 text-center sm:w-3/4 mx-auto;
+  }
 }
