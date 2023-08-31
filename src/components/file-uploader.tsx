@@ -24,7 +24,12 @@ export default function FileUploader({
   if (value) {
     return (
       <div className={cn("relative h-24 w-24", className)}>
-        <Image fill src={value} alt="Upload" className="rounded-full" />
+        <Image
+          fill
+          src={value}
+          alt="Upload"
+          className="rounded-full object-cover"
+        />
         <button
           onClick={() => onChange("")}
           className="bg-rose-500 text-white p-1 rounded-full absolute top-0 right-0 shadow-sm"

@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { Open_Sans } from "next/font/google";
 import type { Metadata } from "next";
 import Providers from "@/components/providers";
-import { Toaster } from "@/components/ui/toaster";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -25,7 +24,6 @@ export default function RootLayout({
           <main className="bg-background-image h-screen bg-cover center">
             {children}
           </main>
-          <Toaster />
         </Providers>
       </body>
     </html>
