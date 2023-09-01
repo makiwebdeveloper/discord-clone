@@ -22,7 +22,7 @@ export default function NavigationMeItem() {
       <Link
         href="/"
         className={cn(
-          "w-12 h-12 sm:w-14 sm:h-14 mx-auto center bg-zinc-800 rounded-3xl transition-all duration-500 hover:rounded-2xl cursor-pointer",
+          "w-12 h-12 sm:w-14 sm:h-14 mx-auto center bg-zinc-800 rounded-3xl transition-all duration-300 hover:rounded-2xl cursor-pointer",
           isSelectedPath && "bg-blue-500 rounded-2xl"
         )}
       >

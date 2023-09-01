@@ -26,14 +26,14 @@ export default function NavigationItem({ server }: Props) {
       {server.image ? (
         <Link
           href={`/servers/${server.id}`}
-          className="relative w-12 h-12 sm:w-14 sm:h-14 transition-all duration-500"
+          className="relative w-12 h-12 sm:w-14 sm:h-14 transition-all duration-300"
         >
           <Image
             src={server.image}
             alt="server image"
             fill
             className={cn(
-              "object-cover rounded-3xl transition-all duration-500 hover:rounded-2xl cursor-pointer",
+              "object-cover rounded-3xl transition-all duration-300 hover:rounded-2xl cursor-pointer",
               isSelectedServer && "rounded-2xl"
             )}
           />
@@ -41,7 +41,7 @@ export default function NavigationItem({ server }: Props) {
       ) : (
         <div
           className={cn(
-            "w-12 h-12 sm:w-14 sm:h-14 center truncate bg-zinc-800 rounded-3xl transition-all duration-500 hover:rounded-2xl cursor-pointer",
+            "w-12 h-12 sm:w-14 sm:h-14 center truncate bg-zinc-800 rounded-3xl transition-all duration-300 hover:rounded-2xl cursor-pointer",
             params?.serverId && "rounded-2xl"
           )}
         >

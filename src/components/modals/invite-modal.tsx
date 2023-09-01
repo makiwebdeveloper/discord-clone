@@ -8,24 +8,23 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import CreateServerForm from "@/components/forms/create-server-form";
+import InviteForm from "@/components/forms/invite-form";
 
-export default function CreateServerModal() {
+export default function InviteModal() {
   const { isOpen, onClose, type } = useModal();
 
-  const isModalOpen = isOpen && type === "createServer";
+  const isModalOpen = isOpen && type === "invite";
 
   return (
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="modal-title">Create your server</DialogTitle>
+          <DialogTitle className="modal-title">Invite your friends</DialogTitle>
           <DialogDescription className="modal-description">
-            Your server is where you hang out with your friends. Create a server
-            and start chatting
+            Copy and share the link so that the user can access this server
           </DialogDescription>
         </DialogHeader>
-        <CreateServerForm />
+        <InviteForm />
       </DialogContent>
     </Dialog>
   );
