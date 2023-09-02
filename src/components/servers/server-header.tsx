@@ -57,7 +57,7 @@ export default function ServerHeader({ server, role }: Props) {
           </DropdownMenuItem>
         )}
         {isAdmin && (
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onOpen("editServer", { server })}>
             Settings <Settings className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
         )}
