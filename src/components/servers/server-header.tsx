@@ -63,7 +63,10 @@ export default function ServerHeader({ server, role }: Props) {
         )}
         <DropdownMenuSeparator />
         {isAdmin && (
-          <DropdownMenuItem className="text-red-500 focus:text-red-500">
+          <DropdownMenuItem
+            onClick={() => onOpen("deleteServer", { server })}
+            className="text-red-500 focus:text-red-500"
+          >
             Delete server <Trash className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
         )}
