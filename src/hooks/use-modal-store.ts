@@ -1,10 +1,14 @@
-import { Server } from "@prisma/client";
+import { IFullServer } from "@/types/servers.interface";
 import { create } from "zustand";
 
-export type ModalType = "createServer" | "invite" | "editServer";
+export type ModalType =
+  | "createServer"
+  | "invite"
+  | "editServer"
+  | "manageMembers";
 
 export interface ModalData {
-  server?: Server;
+  server?: IFullServer;
 }
 
 interface ModalStore {

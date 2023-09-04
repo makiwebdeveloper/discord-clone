@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CreateServerModal from "@/components/modals/create-server-modal";
 import InviteModal from "@/components/modals/invite-modal";
 import EditServerModal from "@/components/modals/edit-server-modal";
+import ManageMembersModal from "@/components/modals/manage-members-modal";
 
 export default function ModalsProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -21,6 +22,7 @@ export default function ModalsProvider() {
       <CreateServerModal />
       <InviteModal />
       <EditServerModal />
+      <ManageMembersModal />
     </>
   );
 }

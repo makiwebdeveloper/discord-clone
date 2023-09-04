@@ -5,19 +5,12 @@ import NavigationItem from "./navigation-item";
 import { getAuthSession } from "@/lib/nextauth";
 import { db } from "@/lib/db";
 import NavigationMeItem from "./navigation-me-item";
+import { getServersByUserId } from "@/services/servers.service";
 
 export default async function Servers() {
   const session = await getAuthSession();
 
-  const servers = await db.server.findMany({
-    where: {
-      members: {
-        some: {
-          userId: session?.user.id,
-        },
-      },
-    },
-  });
+  const servers = await getServersByUserId(session?.user.id!);
 
   return (
     <ScrollArea className="w-24 pb-3">

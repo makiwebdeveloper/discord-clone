@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { IFullServer } from "@/types/servers.interface";
+import { Server } from "@prisma/client";
 
 export async function getServerById(serverId: string) {
   return db.server.findUnique({
@@ -32,6 +33,18 @@ export async function getFullServerById(
         },
         orderBy: {
           role: "asc",
+        },
+      },
+    },
+  });
+}
+
+export async function getServersByUserId(userId: string): Promise<Server[]> {
+  return db.server.findMany({
+    where: {
+      members: {
+        some: {
+          userId,
         },
       },
     },

@@ -7,7 +7,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <article className="bg-zinc-900 lg:rounded-md w-full lg:w-[840px] xl:w-[1080px] h-full lg:h-[550px] xl:h-[620px]">
+    <article className="bg-zinc-900 shadow-xl lg:rounded-md w-full lg:w-[840px] xl:w-[1080px] h-full lg:h-[550px] xl:h-[620px]">
       <Header />
       <div className="flex h-[calc(100%-32px)]">
         <NavigationSidebar />

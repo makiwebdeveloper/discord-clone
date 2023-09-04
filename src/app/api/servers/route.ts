@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { MemberRole } from "@prisma/client";
+import { getServersByUserId } from "@/services/servers.service";
 
 export async function POST(req: Request) {
   try {

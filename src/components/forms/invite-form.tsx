@@ -9,15 +9,21 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { MemberRole } from "@prisma/client";
 
 export default function InviteForm() {
+  const session = useSession();
   const origin = useOrigin();
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
-  const { data, onOpen } = useModal();
+  const {
+    data: { server },
+    onOpen,
+  } = useModal();
 
-  const inviteLink = `${origin}/invite/${data.server?.inviteCode}`;
+  const inviteLink = `${origin}/invite/${server?.inviteCode}`;
 
   function copyLink() {
     navigator.clipboard.writeText(inviteLink);
@@ -26,9 +32,7 @@ export default function InviteForm() {
 
   const { mutate: generateNewInviteCode, isLoading } = useMutation({
     mutationFn: async () => {
-      const res = await axios.patch(
-        `/api/servers/${data.server?.id}/invite-code`
-      );
+      const res = await axios.patch(`/api/servers/${server?.id}/invite-code`);
       return res.data;
     },
     onError: () => {
@@ -70,15 +74,19 @@ export default function InviteForm() {
           </Button>
         </div>
       </div>
-      <Button
-        disabled={isLoading}
-        variant="link"
-        className="p-0 mt-5 flex gap-2 text-zinc-400"
-        size="sm"
-        onClick={() => generateNewInviteCode()}
-      >
-        Regenerate invite code <RefreshCw className="w-4 h-4" />
-      </Button>
+      {server &&
+        server.members.find((member) => member.userId === session.data?.user.id)
+          ?.role !== MemberRole.GUEST && (
+          <Button
+            disabled={isLoading}
+            variant="link"
+            className="p-0 mt-5 flex gap-2 text-zinc-400"
+            size="sm"
+            onClick={() => generateNewInviteCode()}
+          >
+            Regenerate invite code <RefreshCw className="w-4 h-4" />
+          </Button>
+        )}
     </div>
   );
 }

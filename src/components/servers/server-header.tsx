@@ -47,7 +47,7 @@ export default function ServerHeader({ server, role }: Props) {
           Invite friends <UserPlus className="w-4 h-4 ml-auto" />
         </DropdownMenuItem>
         {isAdmin && (
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onOpen("manageMembers", { server })}>
             Manage members <Users className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
         )}
