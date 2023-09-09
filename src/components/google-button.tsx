@@ -19,13 +19,9 @@ export default function GoogleButton({ className }: Props) {
       className={cn(className)}
       variant="secondary"
       onClick={() => {
-        signIn("google")
-          .then(() => {
-            router.push("/");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        signIn("google").catch((err) => {
+          console.log(err);
+        });
       }}
     >
       <GoogleIcon className="w-5 h-5 mr-2" /> Continue with Google
