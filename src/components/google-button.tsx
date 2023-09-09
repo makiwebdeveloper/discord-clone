@@ -4,21 +4,28 @@ import { signIn } from "next-auth/react";
 import { Button } from "./ui/button";
 import { LucideProps } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface Props {
   className?: string;
 }
 
 export default function GoogleButton({ className }: Props) {
+  const router = useRouter();
+
   return (
     <Button
       type="button"
       className={cn(className)}
       variant="secondary"
       onClick={() => {
-        signIn("google").catch((err) => {
-          console.log(err);
-        });
+        signIn("google")
+          .then(() => {
+            router.push("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }}
     >
       <GoogleIcon className="w-5 h-5 mr-2" /> Continue with Google
